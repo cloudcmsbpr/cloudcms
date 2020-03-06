@@ -7,5 +7,5 @@ import {projects} from "../models/Project";
  * GET all projects example
  */
 export const getAllProjects = (req: Request, res: Response) => {
-    return res.json(projects)
+    return res.json(projects);
 };

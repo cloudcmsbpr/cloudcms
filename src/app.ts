@@ -9,6 +9,7 @@ import path from "path";
 import mongoose from "mongoose";
 import passport from "passport";
 import bluebird from "bluebird";
+import "reflect-metadata";
 import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
 
 const MongoStore = mongo(session);
@@ -37,6 +38,41 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUni
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
     process.exit();
 });
+
+// typeORM test
+
+import "reflect-metadata";
+import {createConnection} from "typeorm";
+import {Photo} from "./models/Photo";
+
+createConnection({
+    type: "postgres",
+    host: "dumbo.db.elephantsql.com",
+    port: 5432,
+    username: "",
+    password: "",
+    database: "",
+    entities: [
+        Photo
+    ],
+    synchronize: true,
+    logging: false
+}).then(connection => {
+    const photo = new Photo();
+    photo.name = "Me and Bears";
+    photo.description = "I am near polar bears";
+    photo.filename = "photo-with-bears.jpg";
+    photo.views = 1;
+    photo.isPublished = true;
+
+    return connection.manager
+        .save(photo)
+        .then(photo => {
+            console.log("Photo has been saved. Photo id is", photo.id);
+        });
+}).catch(error => console.log(error));
+
+// end typeORM test
 
 // Express configuration
 app.set("port", process.env.PORT || 3000);

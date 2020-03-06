@@ -48,7 +48,7 @@ export const postLogin = async (req: Request, res: Response, next: NextFunction)
         req.logIn(user, (err) => {
             if (err) { return next(err); }
             req.flash("success", { msg: "Success! You are logged in." });
-            if(!user.selected) console.log('No select');
+            if(!user.selected) console.log("No select");
             res.redirect(req.session.returnTo || "/");
         });
     })(req, res, next);

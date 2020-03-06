@@ -59,7 +59,7 @@ exports.postLogin = (req, res, next) => __awaiter(void 0, void 0, void 0, functi
             }
             req.flash("success", { msg: "Success! You are logged in." });
             if (!user.selected)
-                console.log('No select');
+                console.log("No select");
             res.redirect(req.session.returnTo || "/");
         });
     })(req, res, next);

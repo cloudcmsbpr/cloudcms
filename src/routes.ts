@@ -52,7 +52,7 @@ export default class Routes {
     }
 
     private parseRoutes(e: SingleRoute) {
-        if(e.type === 'get') {
+        if(e.type === "get") {
             if(e.authenticated) {
                 this.app.get(e.path, passportConfig.isAuthenticated, e.controller);
             } else {

@@ -21,6 +21,7 @@ const path_1 = __importDefault(require("path"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const passport_1 = __importDefault(require("passport"));
 const bluebird_1 = __importDefault(require("bluebird"));
+require("reflect-metadata");
 const secrets_1 = require("./util/secrets");
 const MongoStore = connect_mongo_1.default(express_session_1.default);
 const apiController = __importStar(require("./controllers/api"));
@@ -34,6 +35,36 @@ mongoose_1.default.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: tr
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
     process.exit();
 });
+// typeORM test
+require("reflect-metadata");
+const typeorm_1 = require("typeorm");
+const Photo_1 = require("./models/Photo");
+typeorm_1.createConnection({
+    type: "postgres",
+    host: "dumbo.db.elephantsql.com",
+    port: 5432,
+    username: "glpjzuvx",
+    password: "4ZxT1Qv2XPrE_zc0cPGtJL_A44MMtPRK",
+    database: "glpjzuvx",
+    entities: [
+        Photo_1.Photo
+    ],
+    synchronize: true,
+    logging: false
+}).then(connection => {
+    const photo = new Photo_1.Photo();
+    photo.name = "Me and Bears";
+    photo.description = "I am near polar bears";
+    photo.filename = "photo-with-bears.jpg";
+    photo.views = 1;
+    photo.isPublished = true;
+    return connection.manager
+        .save(photo)
+        .then(photo => {
+        console.log("Photo has been saved. Photo id is", photo.id);
+    });
+}).catch(error => console.log(error));
+// end typeORM test
 // Express configuration
 app.set("port", process.env.PORT || 3000);
 app.set("views", path_1.default.join(__dirname, "../views"));
