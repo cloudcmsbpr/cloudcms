@@ -8,7 +8,7 @@ export type UserDocument = mongoose.Document & {
     passwordResetToken: string;
     passwordResetExpires: Date;
 
-    facebook: string;
+    selected: string;
     tokens: AuthToken[];
 
     profile: {
@@ -36,9 +36,7 @@ const userSchema = new mongoose.Schema({
     passwordResetToken: String,
     passwordResetExpires: Date,
 
-    facebook: String,
-    twitter: String,
-    google: String,
+    selected: String,
     tokens: Array,
 
     profile: {

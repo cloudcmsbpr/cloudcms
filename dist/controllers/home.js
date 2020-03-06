@@ -6,7 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 exports.index = (req, res) => {
     res.render("home", {
-        title: "Home"
+        title: "Home",
+        user: req.user || ""
     });
 };
 //# sourceMappingURL=home.js.map
