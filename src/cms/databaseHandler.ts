@@ -5,8 +5,6 @@ export default class DatabaseHandler {
 
     private static connection: Promise<Connection> = null;
 
-    private constructor() {}
-    
     static getConnection() {
         if(!this.connection) {
             throw new Error("getConnection called before creating a connection, use createConnection first")
