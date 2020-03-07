@@ -2,6 +2,10 @@ import bcrypt from "bcrypt-nodejs";
 import crypto from "crypto";
 import mongoose from "mongoose";
 
+
+/**
+ * This is the CMS user aka admin.
+ */
 export type UserDocument = mongoose.Document & {
     email: string;
     password: string;

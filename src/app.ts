@@ -10,7 +10,8 @@ import mongoose from "mongoose";
 import passport from "passport";
 import bluebird from "bluebird";
 import "reflect-metadata";
-import { MONGODB_URI, SESSION_SECRET } from "./util/secrets";
+import { MONGODB_URI, SESSION_SECRET, EXTERNAL_DB_TYPE, EXTERNAL_DB_HOST,
+    EXTERNAL_DB_PORT, EXTERNAL_DB_USERNAME, EXTERNAL_DB_PASSWORD, EXTERNAL_DB_DATABASE} from "./util/secrets";
 
 const MongoStore = mongo(session);
 
@@ -24,6 +25,8 @@ import * as contactController from "./controllers/contact";
 // API keys and Passport configuration
 import * as passportConfig from "./config/passport";
 import Routes from "./routes";
+import DatabaseHandler from "./cms/databaseHandler";
+import {Photo} from "./models/Photo";
 
 // Create Express server
 const app = express();
@@ -39,40 +42,16 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUni
     process.exit();
 });
 
-// typeORM test
+// typeORM
 
-import "reflect-metadata";
-import {createConnection} from "typeorm";
-import {Photo} from "./models/Photo";
+const externalDb = DatabaseHandler;
+externalDb.createConnection(EXTERNAL_DB_TYPE, EXTERNAL_DB_HOST, EXTERNAL_DB_PORT as unknown as number,
+    EXTERNAL_DB_USERNAME, EXTERNAL_DB_PASSWORD, EXTERNAL_DB_DATABASE,
+    [Photo]);
 
-createConnection({
-    type: "postgres",
-    host: "dumbo.db.elephantsql.com",
-    port: 5432,
-    username: "",
-    password: "",
-    database: "",
-    entities: [
-        Photo
-    ],
-    synchronize: true,
-    logging: false
-}).then(connection => {
-    const photo = new Photo();
-    photo.name = "Me and Bears";
-    photo.description = "I am near polar bears";
-    photo.filename = "photo-with-bears.jpg";
-    photo.views = 1;
-    photo.isPublished = true;
-
-    return connection.manager
-        .save(photo)
-        .then(photo => {
-            console.log("Photo has been saved. Photo id is", photo.id);
-        });
-}).catch(error => console.log(error));
-
-// end typeORM test
+externalDb.getConnection()
+    .then(_ => console.log("Connection to external db successful"))
+    .catch(e => console.log(e));
 
 // Express configuration
 app.set("port", process.env.PORT || 3000);

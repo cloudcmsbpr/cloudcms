@@ -17,6 +17,13 @@ export const SESSION_SECRET = process.env["SESSION_SECRET"];
 // export const MONGODB_URI = prod ? process.env["MONGODB_URI"] : process.env["MONGODB_URI_LOCAL"];
 export const MONGODB_URI = process.env["MONGODB_URI"];
 
+export const EXTERNAL_DB_TYPE = process.env["EXTERNAL_DB_TYPE"];
+export const EXTERNAL_DB_HOST = process.env["EXTERNAL_DB_HOST"];
+export const EXTERNAL_DB_PORT = process.env["EXTERNAL_DB_PORT"];
+export const EXTERNAL_DB_USERNAME = process.env["EXTERNAL_DB_USERNAME"];
+export const EXTERNAL_DB_PASSWORD = process.env["EXTERNAL_DB_PASSWORD"];
+export const EXTERNAL_DB_DATABASE = process.env["EXTERNAL_DB_DATABASE"];
+
 if (!SESSION_SECRET) {
     logger.error("No client secret. Set SESSION_SECRET environment variable.");
     process.exit(1);
