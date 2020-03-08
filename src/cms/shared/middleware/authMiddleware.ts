@@ -4,12 +4,12 @@ import { SESSION_SECRET } from "../../../util/secrets";
 
 export const checkJwt = (req: Request, res: Response, next: NextFunction) => {
     //Get the jwt token from the head
-    const token = <string>req.headers["auth"];
+    const token = req.headers["auth"] as string;
     let jwtPayload;
 
     //Try to validate the token and get data
     try {
-        jwtPayload = <any>jwt.verify(token, SESSION_SECRET);
+        jwtPayload = jwt.verify(token, SESSION_SECRET) as any;
         res.locals.jwtPayload = jwtPayload;
     } catch (error) {
         //If token is not valid, respond with 401 (unauthorized)
