@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { getRepository } from "typeorm";
 import { validate } from "class-validator";
 
-import { User } from "../../sharedModels/User";
+import { User } from "../models/User";
 
 class UserController{
 

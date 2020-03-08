@@ -27,7 +27,7 @@ const MongoStore = connect_mongo_1.default(express_session_1.default);
 const apiController = __importStar(require("./controllers/api"));
 const routes_1 = __importDefault(require("./routes"));
 const databaseHandler_1 = __importDefault(require("./cms/databaseHandler"));
-const User_1 = require("./cms/sharedModels/User");
+const User_1 = require("./cms/shared/models/User");
 // Create Express server
 const app = express_1.default();
 // Connect to MongoDB

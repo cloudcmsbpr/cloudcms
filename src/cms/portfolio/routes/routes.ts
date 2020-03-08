@@ -1,8 +1,8 @@
 import {getAllProjects} from "../controllers/projects";
 import SingleRoute from "../../util/SingleRoute";
-import AuthController from "../controllers/authController";
-import { checkJwt } from "../../middleware";
-import UserController from "../controllers/userController";
+import AuthController from "../../shared/controllers/authController";
+import { checkJwt } from "../../shared/middleware/authMiddleware";
+import UserController from "../../shared/controllers/userController";
 
 
 // the authenticated field is from passport, we may either remove it or replace it

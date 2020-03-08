@@ -26,7 +26,7 @@ import * as contactController from "./controllers/contact";
 import * as passportConfig from "./config/passport";
 import Routes from "./routes";
 import DatabaseHandler from "./cms/databaseHandler";
-import {User} from "./cms/sharedModels/User";
+import {User} from "./cms/shared/models/User";
 
 // Create Express server
 const app = express();
