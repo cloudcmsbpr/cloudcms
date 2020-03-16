@@ -10,7 +10,7 @@ import UserController from "../../shared/controllers/userController";
 export const routes: SingleRoute[] = [
     // {type: 'get', path: 'projects', controller: getAllProjects, authenticated: true},
     new SingleRoute("get", "/projects", getAllProjects, [checkJwt]),
-    new SingleRoute("post", "/users/login", AuthController.login, [checkJwt]), // login
+    new SingleRoute("post", "/users/login", AuthController.login, []), // login
     new SingleRoute("post", "/users/signup", UserController.newUser, [checkJwt]), // signup
     new SingleRoute("post", "/users/getall", UserController.listAll,  [checkJwt]), // sample get with jwt
     new SingleRoute("post", "/users/delete", UserController.deleteUser,  [checkJwt]), // sample get with jwt
