@@ -9,7 +9,7 @@ import { SESSION_SECRET } from "../../../util/secrets";
 class AuthController {
     static login = async (req: Request, res: Response) => {
         //Check if username and password are set
-        let { username, password } = req.body;
+        const { username, password } = req.body;
         if (!(username && password)) {
             res.status(400).send();
         }

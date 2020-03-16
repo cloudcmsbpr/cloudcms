@@ -3,6 +3,7 @@ import * as homeController from "./controllers/home";
 import * as contactController from "./controllers/contact";
 import * as passportConfig from "./config/passport";
 import * as userController from "./controllers/user";
+import * as stageUserController from "./controllers/stage_user";
 import {routes as portfolioRoutes} from "./cms/portfolio/routes/routes";
 import {routes as blogRoutes} from "./cms/blog/routes/routes";
 import {routes as boardRoutes} from "./cms/board/routes/routes";
@@ -17,6 +18,14 @@ export default class Routes {
     }
     
     setRoutes() {
+
+        //
+        //    stage user login and signup
+
+        this.app.get("/stage/signup", stageUserController.getSignUp);
+        this.app.get("/stage/login", stageUserController.getLogin);
+
+        //
         this.app.get("/", homeController.index);
         this.app.get("/login", userController.getLogin);
         this.app.post("/login", userController.postLogin);
