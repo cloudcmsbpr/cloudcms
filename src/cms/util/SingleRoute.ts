@@ -5,9 +5,8 @@ export default class SingleRoute {
     path: string;
     middleware: any[];
     controller: RequestHandler;
-    authenticated: boolean;
 
-    constructor(type: string, path: string, controller: RequestHandler, authenticated: boolean, middleware: any[] = []) {
+    constructor(type: string, path: string, controller: RequestHandler, middleware: any[] = []) {
         if(type.trim().length === 0) throw new Error("type is empty");
         if(path.trim().length === 0) throw new Error("path is empty");
         if(path.charAt(0) !== "/") throw new Error("path must start with /");
@@ -15,6 +14,5 @@ export default class SingleRoute {
         this.type = type;
         this.path = path;
         this.controller = controller;
-        this.authenticated = authenticated;
     }
 }

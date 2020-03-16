@@ -9,13 +9,13 @@ import {routes as boardRoutes} from "./cms/board/routes/routes";
 import SingleRoute from "./cms/util/SingleRoute";
 
 export default class Routes {
-    
+
     app: express.Application;
-    
+
     constructor(app: express.Application) {
         this.app = app;
     }
-    
+
     setRoutes() {
         this.app.get("/", homeController.index);
         this.app.get("/login", userController.getLogin);
@@ -52,18 +52,10 @@ export default class Routes {
     }
 
     private parseRoutes(e: SingleRoute) {
-        if(e.type === "get") {
-            if(e.authenticated) {
-                this.app.get(e.path, passportConfig.isAuthenticated, e.middleware, e.controller);
-            } else {
-                this.app.get(e.path, e.controller);
-            }
+        if (e.type === "get") {
+            this.app.get(e.path, e.middleware, e.controller);
         } else {
-            if(e.authenticated) {
-                this.app.post(e.path, passportConfig.isAuthenticated, e.middleware, e.controller);
-            } else {
-                this.app.post(e.path, e.controller);
-            }
+            this.app.post(e.path, e.middleware, e.controller);
         }
     }
 }

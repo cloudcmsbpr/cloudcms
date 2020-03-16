@@ -9,8 +9,9 @@ import UserController from "../../shared/controllers/userController";
 // but for now all non-passport request should have it as false
 export const routes: SingleRoute[] = [
     // {type: 'get', path: 'projects', controller: getAllProjects, authenticated: true},
-    new SingleRoute("get", "/projects", getAllProjects, true),
-    new SingleRoute("post", "/users/login", AuthController.login, false), // login
-    new SingleRoute("post", "/users/signup", UserController.newUser, false), // signup
-    new SingleRoute("post", "/users/getall", UserController.listAll, false, [checkJwt]), // sample get with jwt
+    new SingleRoute("get", "/projects", getAllProjects, [checkJwt]),
+    new SingleRoute("post", "/users/login", AuthController.login, [checkJwt]), // login
+    new SingleRoute("post", "/users/signup", UserController.newUser, [checkJwt]), // signup
+    new SingleRoute("post", "/users/getall", UserController.listAll,  [checkJwt]), // sample get with jwt
+    new SingleRoute("post", "/users/delete", UserController.deleteUser,  [checkJwt]), // sample get with jwt
 ];

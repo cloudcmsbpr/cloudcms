@@ -7,7 +7,7 @@ export default class DatabaseHandler {
 
     static getConnection() {
         if(!this.connection) {
-            throw new Error("getConnection called before creating a connection, use createConnection first")
+            throw new Error("getConnection called before creating a connection, use createConnection first");
         }
         return this.connection;
     }
@@ -15,7 +15,7 @@ export default class DatabaseHandler {
    static createConnection(type: string, host: string, port: number, username: string,
                             password: string, database: string, entities: any[]) {
 
-        if(type === 'postgres' || type === 'mongodb') {
+        if(type === "postgres" || type === "mongodb") {
             this.connection = createConnection({
                 type: type,
                 host: host,
@@ -26,9 +26,9 @@ export default class DatabaseHandler {
                 entities: entities,
                 synchronize: true,
                 logging: false
-            })
+            });
         } else {
-            throw new Error('Connection type must be postgres | mongodb')
+            throw new Error("Connection type must be postgres | mongodb");
         }
 
     }

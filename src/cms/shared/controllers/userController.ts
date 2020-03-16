@@ -34,8 +34,8 @@ class UserController{
 
     static newUser = async (req: Request, res: Response) => {
         //Get parameters from the body
-        let { username, password } = req.body;
-        let user = new User();
+        const { username, password } = req.body;
+        const user = new User();
         user.username = username;
         user.password = password;
 
