@@ -27,6 +27,8 @@ import * as passportConfig from "./config/passport";
 import Routes from "./routes";
 import DatabaseHandler from "./cms/databaseHandler";
 import {User} from "./cms/shared/models/User";
+import {Project} from "./cms/portfolio/models/Project";
+import {Tech} from "./cms/portfolio/models/Tech";
 
 // Create Express server
 const app = express();
@@ -47,7 +49,7 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUni
 const externalDb = DatabaseHandler;
 externalDb.createConnection(EXTERNAL_DB_TYPE, EXTERNAL_DB_HOST, Number(EXTERNAL_DB_PORT),
     EXTERNAL_DB_USERNAME, EXTERNAL_DB_PASSWORD, EXTERNAL_DB_DATABASE,
-    [User]);
+    [User, Project, Tech]);
 
 externalDb.getConnection()
     .then(_ => console.log("Connection to external db successful"))
