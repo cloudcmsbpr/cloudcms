@@ -101,7 +101,7 @@ class UserController{
 
     static deleteUser = async (req: Request, res: Response) => {
         //Get the ID from the url
-        const id = req.params.id;
+        const id = req.body.userId;
 
         const userRepository = getRepository(User);
         let user: User;
