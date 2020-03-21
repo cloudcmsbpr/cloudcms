@@ -17,18 +17,17 @@ import UserController from "../../shared/controllers/userController";
 // but for now all non-passport request should have it as false
 export const routes: SingleRoute[] = [
     // todo add auth for posts after some test tomorrow
-    new SingleRoute("get", "/portfolio/projects", getAllProjects, [checkJwt]),
     new SingleRoute("get", "/portfolio/projects", getAllProjects, []),
     new SingleRoute("get", "/portfolio/techs", getAllTech, []),
     new SingleRoute("get", "/portfolio/get_tech_by_id", getTechById, []),
     new SingleRoute("get", "/portfolio/get_project_by_id", getProjectById, []),
     new SingleRoute("get", "/portfolio/get_project_by_name", getProjectByName, []),
-    new SingleRoute("post", "/portfolio/add_tech", addTech, []),
-    new SingleRoute("post", "/portfolio/add_project", addProject, []),
-    new SingleRoute("post", "/portfolio/edit_tech", editTech, []),
-    new SingleRoute("post", "/portfolio/edit_project", editProject, []),
-    new SingleRoute("post", "/portfolio/delete_tech", deleteTech, []),
-    new SingleRoute("post", "/portfolio/delete_project", deleteProject, []),
+    new SingleRoute("post", "/portfolio/add_tech", addTech, [checkJwt]),
+    new SingleRoute("post", "/portfolio/add_project", addProject, [checkJwt]),
+    new SingleRoute("post", "/portfolio/edit_tech", editTech, [checkJwt]),
+    new SingleRoute("post", "/portfolio/edit_project", editProject, [checkJwt]),
+    new SingleRoute("post", "/portfolio/delete_tech", deleteTech, [checkJwt]),
+    new SingleRoute("post", "/portfolio/delete_project", deleteProject, [checkJwt]),
     new SingleRoute("post", "/users/login", AuthController.login, []), // login
     new SingleRoute("post", "/users/signup", UserController.newUser, []), // signup
     new SingleRoute("get", "/users/getall", UserController.listAll,  [checkJwt]), // sample get with jwt

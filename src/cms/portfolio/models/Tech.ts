@@ -19,13 +19,4 @@ export class Tech {
     @Column()
     @Length(0, 1000)
     description: string;
-
-    equals(other: Tech): boolean {
-        if(other.id !== this.id) return false;
-        if(other.description !== this.description) return false;
-        if(other.image_url !== this.image_url) return false;
-        return (other.name === this.name);
-    }
-
-
 }
