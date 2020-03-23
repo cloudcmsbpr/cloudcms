@@ -3,7 +3,7 @@ import axios from "axios";
 import * as jwt from "jsonwebtoken";
 import {SESSION_SECRET} from "../../src/util/secrets";
 
-const username = "user1";
+const username = "user2";
 const password = "password123";
 const path = "http://localhost:5000";
 let userId = 0;
@@ -30,13 +30,6 @@ test("login", () => {
     });
 });
 
-test("get projects with token", () => {
-    expect.assertions(1);
-    return axios.get(path + "/portfolio/projects", {headers: {auth: token}}).then((res: any) => {
-        expect(res.status).toEqual(200);
-    });
-});
-
 test("get all users and user created", () => {
     expect.assertions(3);
     return axios.get(path + "/users/getall", {headers: {auth: token}}).then((res: any) => {
@@ -53,19 +46,5 @@ test("delete user account", () => {
     return axios.post(path + "/users/delete",
         {userId: userId}, {headers: {auth: token}}).then((res: any) => {
         expect(res.status).toEqual(204);
-    });
-});
-
-test("get projects without token", () => {
-    expect.assertions(1);
-    return axios.get(path + "/portfolio/projects").catch((err: any) => {
-        expect(err.response.status).toEqual(401);
-    });
-});
-
-test("get projects with wrong token", () => {
-    expect.assertions(1);
-    return axios.get(path + "/portfolio/projects", {headers: {auth: "1234"}}).catch((err: any) => {
-        expect(err.response.status).toEqual(401);
     });
 });
