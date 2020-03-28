@@ -1,0 +1,14 @@
+extends ../layout
+
+block content
+    #container
+        if error
+            h1= error
+        else
+            h1 Database:
+
+            div(style="border: 1px solid gray")
+                each db in data
+                    h1=("Name: " + db.name)
+                    h3=db.userEmail
+                    h3=db.host

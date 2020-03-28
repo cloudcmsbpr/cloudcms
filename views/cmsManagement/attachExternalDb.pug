@@ -1,0 +1,33 @@
+extends ../layout
+
+block content
+    form(action='/externaldb/create', method='POST')
+        div.form-group
+            label(for='type_') type
+            input#type_.form-control(type='text', placeholder='postgres', name='type', value='postgres')
+
+        div.form-group
+            label(for='host') host
+            input#host.form-control(type='text', placeholder='db host', name='host')
+
+        div.form-group
+            label(for='port') port
+            input#port.form-control(type='text', placeholder='db port', name='port')
+
+        div.form-group
+            label(for='username') username
+            input#username.form-control(type='text', placeholder='db username', name='username')
+
+        div.form-group
+            label(for='password') password
+            input#password.form-control(type='text', placeholder='db password', name='password')
+
+        div.form-group
+            label(for='database') database
+            input#database.form-control(type='text', placeholder='database', name='database')
+
+        div.form-group
+            label(for='dbName') name
+            input#dbName.form-control(type='text', placeholder='database name', name='name')
+
+        button.btn.btn-primary(type='submit') Add Database

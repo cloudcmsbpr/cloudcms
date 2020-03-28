@@ -11,8 +11,8 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
       ul.nav.navbar-nav.mr-auto
         li.nav-item(class=(title === 'Home') ? 'active' : undefined)
           a.nav-link(href='/') Home
-        li.nav-item(class=(title === 'Contact') ? 'active' : undefined)
-          a.nav-link(href='/contact') Contact
+        li.nav-item(class=(title === 'My databases') ? 'active' : undefined)
+          a.nav-link(href='/externaldb/mydatabases') Databases
       ul.nav.navbar-nav
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)
