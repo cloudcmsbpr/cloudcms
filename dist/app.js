@@ -28,6 +28,8 @@ const apiController = __importStar(require("./controllers/api"));
 const routes_1 = __importDefault(require("./routes"));
 const databaseHandler_1 = __importDefault(require("./cms/databaseHandler"));
 const User_1 = require("./cms/shared/models/User");
+const Project_1 = require("./cms/portfolio/models/Project");
+const Tech_1 = require("./cms/portfolio/models/Tech");
 // Create Express server
 const app = express_1.default();
 // Connect to MongoDB
@@ -39,7 +41,7 @@ mongoose_1.default.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: tr
 });
 // typeORM
 const externalDb = databaseHandler_1.default;
-externalDb.createConnection(secrets_1.EXTERNAL_DB_TYPE, secrets_1.EXTERNAL_DB_HOST, Number(secrets_1.EXTERNAL_DB_PORT), secrets_1.EXTERNAL_DB_USERNAME, secrets_1.EXTERNAL_DB_PASSWORD, secrets_1.EXTERNAL_DB_DATABASE, [User_1.User]);
+externalDb.createConnection(secrets_1.EXTERNAL_DB_TYPE, secrets_1.EXTERNAL_DB_HOST, Number(secrets_1.EXTERNAL_DB_PORT), secrets_1.EXTERNAL_DB_USERNAME, secrets_1.EXTERNAL_DB_PASSWORD, secrets_1.EXTERNAL_DB_DATABASE, [User_1.User, Project_1.Project, Tech_1.Tech]);
 externalDb.getConnection()
     .then(_ => console.log("Connection to external db successful"))
     .catch(e => console.log(e));
