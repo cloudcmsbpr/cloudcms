@@ -7,8 +7,19 @@ block content
         else
             h1 Database:
 
-            div(style="border: 1px solid gray")
+            div
                 each db in data
-                    h1=("Name: " + db.name)
-                    h3=db.userEmail
-                    h3=db.host
+                    div(style="border: 1px solid gray; margin:3px; padding: 4px;")
+                        h1.db_name=("Name: " + db.name)
+                        h3.db_type=("Type: " + db.type)
+                        h3.db_email=("Email: " + db.userEmail)
+                        h3.db_host=("Host: " + db.host)
+                        h3=("id: " + db._id)
+                        br
+                        form(action="/externaldb/delete", method="POST")
+                            input(name="_id", hidden="true", value=db._id)
+                            button.btn.btn-danger Remove
+
+            br
+            br
+            a.btn.btn-info(href="/externaldb") Add database

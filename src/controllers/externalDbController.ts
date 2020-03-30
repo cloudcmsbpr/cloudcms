@@ -11,8 +11,8 @@ export default class ExternalDbController {
         if (IsAnyUndefined(type, host, port, username, password, database, name,))
             return res.status(500).send({error: req.body, reason: "some were undefined"});
 
-        if(type.toLowerCase() !== 'postgres')
-            return res.status(500).send({error: 'Only postgres is supported'});
+        if(type.toLowerCase() !== "postgres")
+            return res.status(500).send({error: "Only postgres is supported"});
 
         const attachedDb = new AttachedDatabaseModel();
         attachedDb.type = type;
@@ -25,14 +25,14 @@ export default class ExternalDbController {
         // @ts-ignore
         attachedDb.userEmail = req.user.email;
 
+        console.log(attachedDb);
+
         await attachedDb.save(err => {
             if(err) {
                 // res.status(501).send({data: err})
-                return res.render("cmsManagement/allExternalDbs.pug",
-                    {data: [], error: err});
+                return res.status(200).redirect("/externaldb/mydatabases");
             }
-            return res.render("cmsManagement/allExternalDbs.pug",
-                {data: [attachedDb], error: null});
+            return res.status(200).redirect("/externaldb/mydatabases");
         });
     };
 
@@ -46,7 +46,13 @@ export default class ExternalDbController {
                 {data: [], error: err});
             return res.render("cmsManagement/allExternalDbs.pug",
                 {data: data, error: null});
-        })
+        });
+    };
+
+    static delete = async (req: Request, res: Response) => {
+        AttachedDatabaseModel.deleteOne({_id: req.body._id}, () => {
+            return res.redirect("/externaldb/mydatabases");
+        });
     };
 
     static getCreatePage = async (req: Request, res: Response) => {

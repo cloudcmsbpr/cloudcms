@@ -10,7 +10,7 @@ const decipher = crypto.createDecipheriv(algorithm, key, iv);
 
 
 export const encrypt = (text: string): string => {
-    console.log('Encrypting ' + text);
+    console.log("Encrypting " + text);
     let encrypted = cipher.update(text, "utf8", "hex");
     encrypted += cipher.final("hex");
     return encrypted;

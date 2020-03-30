@@ -38,6 +38,7 @@ export default class Routes {
 
         // external db crud
         this.app.post("/externaldb/create", passportConfig.isAuthenticated, externalDbController.create);
+        this.app.post("/externaldb/delete", passportConfig.isAuthenticated, externalDbController.delete);
         this.app.get("/externaldb", passportConfig.isAuthenticated, externalDbController.getCreatePage);
         this.app.get("/externaldb/mydatabases", passportConfig.isAuthenticated, externalDbController.getAll);
 
