@@ -5,7 +5,7 @@ import {SESSION_SECRET} from "../../src/util/secrets";
 
 const path = "http://localhost:5000";
 const username = "user2";
-let userId = 0;
+const userId = 0;
 
 let tech: any = {};
 let project: any = {};
@@ -18,7 +18,7 @@ const token = jwt.sign(
 
 test("add tech", () => {
     expect.assertions(2);
-    let data = {
+    const data = {
         "name": "t1", "description": "some_tech", "image_url": "http://some_image"
     };
     return axios.post(path + "/portfolio/add_tech", data, {headers: {auth: token}}).then((res: any) => {
@@ -44,13 +44,13 @@ test("get all techs", () => {
         expect(res.status).toEqual(200);
         expect(res.data.length).toBeGreaterThan(0);
         expect(res.data.filter((e: any) =>
-            e.id === tech.id).length).toEqual(1)
+            e.id === tech.id).length).toEqual(1);
     }).catch(err => console.log(err));
 });
 
 test("edit tech", () => {
     expect.assertions(2);
-    let data = {
+    const data = {
         ...tech
     };
     data.name = Math.random().toString(36).substring(7);
@@ -62,15 +62,15 @@ test("edit tech", () => {
 
 test("add project", () => {
     expect.assertions(4);
-    let data = {
-        name: 'BFP',
-        image_url: 'some_image_url',
-        description: 'some description',
+    const data = {
+        name: "BFP",
+        image_url: "some_image_url",
+        description: "some description",
         start_date: new Date().toString(),
         end_date: new Date().toString(),
-        git_link: 'some git link',
-        web_link: 'some_web_link',
-        other: 'other data',
+        git_link: "some git link",
+        web_link: "some_web_link",
+        other: "other data",
         // @ts-ignore
         techs: []
     };
@@ -110,13 +110,13 @@ test("get all projects", () => {
         expect(res.status).toEqual(200);
         expect(res.data.length).toBeGreaterThan(0);
         expect(res.data.filter((e: any) =>
-            e.id === project.id).length).toEqual(1)
+            e.id === project.id).length).toEqual(1);
     }).catch(err => console.log(err));
 });
 
 test("edit project", () => {
     expect.assertions(3);
-    let data = {
+    const data = {
         id: 13,
         name: Math.random().toString(36).substring(7)
     };
@@ -129,7 +129,7 @@ test("edit project", () => {
 
 test("delete tech", () => {
     expect.assertions(2);
-    let data = {
+    const data = {
         id: tech.id
     };
     return axios.post(path + "/portfolio/delete_tech", data, {headers: {auth: token}}).then((res: any) => {
@@ -140,7 +140,7 @@ test("delete tech", () => {
 
 test("delete project", () => {
     expect.assertions(3);
-    let data = {
+    const data = {
         ...project
     };
     return axios.post(path + "/portfolio/delete_project", data, {headers: {auth: token}}).then((res: any) => {
