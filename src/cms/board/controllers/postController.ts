@@ -16,7 +16,7 @@ function create<T>(req: Request, params: string[]): any {
 }
 
 export const createNewPost = async (req: Request, res: Response) => {
-    const requiredFields = ["name", "description", "Post_image"];
+    const requiredFields = ["title", "content"];
 
     const parsed = create<Post>(req, requiredFields);
     if (!parsed[0]) return res.status(500).send(parsed[1] + " is missing in the request body");

@@ -28,33 +28,12 @@ export const getAllBoards = async (req: Request, res: Response) => {
     }
 };
 
+// todo - Does not edit - creates new instance with different data
 export const editBoard = async (req: Request, res: Response) => {
     return await edit<Board>(req.body.id || req.body.name, res, Board, req.body);
 };
 
-export const deleteBoard = async (req: Request, res: Response) => {
+    export const deleteBoard = async (req: Request, res: Response) => {
     return await remove<Board>(req.body.id || req.body.name, res, Board);
 };
-
-// Maybe not needed because all users is consumed by users frontend.
-// export const addSubscriber =  async (req: Request, res: Response) => {
-//     const requiredFields = ["boardId", "userId"];
-//
-//     const repo = getRepository<Board>("Board");
-//     const userRepository = getRepository<User>("User");
-//     const parsed = create<Board>(req, requiredFields);
-//     if (!parsed[0]) return res.status(500).send(parsed[1] + " is missing in the request body");
-//     try {
-//         const user:  User = await userRepository.findOne(req.body.userId);
-//         const board: Board = await repo.findOne(req.body.boardId);
-//         board.subscribers.push(user);
-//         return await edit(req.body.id, res, Board, board);
-//     }
-//     catch(e){
-//         return res.status(500).send(e);
-//     }
-// };
-
-
-
 

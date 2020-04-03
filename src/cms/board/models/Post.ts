@@ -1,4 +1,4 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, OneToOne, PrimaryGeneratedColumn} from "typeorm";
 import {Length} from "class-validator";
 
 
@@ -9,14 +9,14 @@ export class Post {
     id: number;
 
     @Column()
-    @Length(4, 100)
+    @Length(4, 400)
     title: string;
 
     @Column()
     @Length(4, 400)
-    body: string;
+    content: string;
 
-    @Column()
+    @Column(type => Number)
     voteCount: number;
 
     // todo - Handle multimedia types
