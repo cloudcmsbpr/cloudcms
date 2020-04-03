@@ -1,0 +1,15 @@
+extends ../layout
+
+block content
+    h2 Select a template
+    form(action='/template/select', method='POST')
+        div.form-group
+            label(for='type_') Template Type
+            input#type_(type="radio", name="templateType", value="1")
+            | Blog
+            input(type="radio", name="templateType", value="2")
+            | Board
+            input(type="radio", name="templateType", value="3")
+            | Portfolio
+
+        button.btn.btn-primary(type='submit') Continue

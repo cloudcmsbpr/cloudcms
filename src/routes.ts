@@ -8,6 +8,7 @@ import {routes as blogRoutes} from "./cms/blog/routes/routes";
 import {routes as boardRoutes} from "./cms/board/routes/routes";
 import SingleRoute from "./cms/util/SingleRoute";
 import externalDbController from "./controllers/externalDbController";
+import selectTemplateController from "./controllers/selectTemplateController";
 
 export default class Routes {
 
@@ -41,6 +42,10 @@ export default class Routes {
         this.app.post("/externaldb/delete", passportConfig.isAuthenticated, externalDbController.delete);
         this.app.get("/externaldb", passportConfig.isAuthenticated, externalDbController.getCreatePage);
         this.app.get("/externaldb/mydatabases", passportConfig.isAuthenticated, externalDbController.getAll);
+
+        // select template
+        this.app.get("/template", passportConfig.isAuthenticated, selectTemplateController.getSelectTemplatePage);
+        this.app.post("/template/select", passportConfig.isAuthenticated, selectTemplateController.setTemplate);
 
         this.setPortfolioRoutes();
         this.setBlogRoutes();
