@@ -13,6 +13,8 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
           a.nav-link(href='/') Home
         li.nav-item(class=(title === 'My databases') ? 'active' : undefined)
           a.nav-link(href='/externaldb/mydatabases') Databases
+        li.nav-item(class=(title === 'Template') ? 'active' : undefined)
+          a.nav-link(href='/template') Template
       ul.nav.navbar-nav
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)

@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+    style
+        |    .template-type { width: 10%; display: flex-box; align-items: flex-start; justify-content: center; margin:10px; border: 2px solid black}
+        |    input { width: 100%; display: flex-box; align-self: center; justify-self: center; }
+        |    h3 { width: 100%; display: flex-box; align-self: center; justify-self: center; }
+
+
+    h2 Select a template
+    form(action='/template/select', method='POST')
+        div.form-group
+            div.template-type
+                h3 Blog
+                input(type="radio", name="templateType", value="1")
+            div.template-type
+                h3 Board
+                input(type="radio", name="templateType", value="2")
+            div.template-type
+                h3 Portfolio
+                input(type="radio", name="templateType", value="3")
+
+            button.btn.btn-primary(type='submit') Continue
