@@ -32,6 +32,22 @@ export const getLogin = (req: Request, res: Response) => {
     });
 };
 
+function getExternalDbConnectionParams(user: UserDocument) {
+    AttachedDatabaseModel.findOne({"userEmail": user.email}, (err, attachedDb) => {
+        if(err) {console.log(err);}
+        const externalDb = DatabaseHandler;
+        externalDb.createConnection(attachedDb.type, attachedDb.host, attachedDb.port,
+            attachedDb.username, decrypt(attachedDb.password), attachedDb.database,
+            [StageUser, Board, Post, Tech, Project]); // todo: this have to be imported based on the selected template
+
+        externalDb.getConnection()
+            .then(_ => console.log("Connection to external db successful"))
+            .catch(e => console.log(e));
+
+    });
+
+}
+
 /**
  * POST /login
  * Sign in using email and password.
@@ -64,24 +80,6 @@ export const postLogin = async (req: Request, res: Response, next: NextFunction)
         getExternalDbConnectionParams(user);
     })(req, res, next);
 };
-
-
-
-function getExternalDbConnectionParams(user: UserDocument) {
-    AttachedDatabaseModel.findOne({"userEmail": user.email}, (err, attachedDb) => {
-        if(err) {console.log(err);}
-        const externalDb = DatabaseHandler;
-        externalDb.createConnection(attachedDb.type, attachedDb.host, attachedDb.port,
-            attachedDb.username, decrypt(attachedDb.password), attachedDb.database,
-            [StageUser, Board, Post, Tech, Project]); // todo: this have to be imported based on the selected template
-
-        externalDb.getConnection()
-            .then(_ => console.log("Connection to external db successful"))
-            .catch(e => console.log(e));
-
-    });
-
-}
 
 /**
  * GET /logout
