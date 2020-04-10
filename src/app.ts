@@ -10,25 +10,13 @@ import mongoose from "mongoose";
 import passport from "passport";
 import bluebird from "bluebird";
 import "reflect-metadata";
-import { MONGODB_URI, SESSION_SECRET, EXTERNAL_DB_TYPE, EXTERNAL_DB_HOST,
-    EXTERNAL_DB_PORT, EXTERNAL_DB_USERNAME, EXTERNAL_DB_PASSWORD, EXTERNAL_DB_DATABASE} from "./util/secrets";
+import { MONGODB_URI, SESSION_SECRET} from "./util/secrets";
 
 const MongoStore = mongo(session);
 
-// Controllers (route handlers)
-import * as homeController from "./controllers/home";
-import * as userController from "./controllers/user";
 import * as apiController from "./controllers/api";
-import * as contactController from "./controllers/contact";
-
-
-// API keys and Passport configuration
-import * as passportConfig from "./config/passport";
 import Routes from "./routes";
-import DatabaseHandler from "./cms/databaseHandler";
-import {User} from "./cms/shared/models/User";
-import {Board} from "./cms/board/models/Board";
-import {Post} from "./cms/board/models/Post";
+
 
 // Create Express server
 const app = express();
@@ -37,23 +25,12 @@ const app = express();
 const mongoUrl = MONGODB_URI;
 mongoose.Promise = bluebird;
 
-mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true } ).then(
+mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true, useFindAndModify: false } ).then(
     () => { /** ready to use. The `mongoose.connect()` promise resolves to undefined. */ },
 ).catch(err => {
     console.log("MongoDB connection error. Please make sure MongoDB is running. " + err);
     process.exit();
 });
-
-// typeORM
-
-const externalDb = DatabaseHandler;
-externalDb.createConnection(EXTERNAL_DB_TYPE, EXTERNAL_DB_HOST, Number(EXTERNAL_DB_PORT),
-    EXTERNAL_DB_USERNAME, EXTERNAL_DB_PASSWORD, EXTERNAL_DB_DATABASE,
-    [User, Board, Post]);
-
-externalDb.getConnection()
-    .then(_ => console.log("Connection to external db successful"))
-    .catch(e => console.log(e));
 
 // Express configuration
 app.set("port", process.env.PORT || 3000);
@@ -108,14 +85,5 @@ new Routes(app).setRoutes();
  * API examples routes.
  */
 app.get("/api", apiController.getApi);
-// app.get("/api/facebook", passportConfig.isAuthenticated, passportConfig.isAuthorized, apiController.getFacebook);
-
-/**
- * OAuth authentication routes. (Sign in)
- */
-// app.get("/auth/facebook", passport.authenticate("facebook", { scope: ["email", "public_profile"] }));
-// app.get("/auth/facebook/callback", passport.authenticate("facebook", { failureRedirect: "/login" }), (req, res) => {
-//     res.redirect(req.session.returnTo || "/");
-// });
 
 export default app;

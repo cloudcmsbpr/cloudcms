@@ -8,6 +8,16 @@ import { IVerifyOptions } from "passport-local";
 import { WriteError } from "mongodb";
 import { check, sanitize, validationResult } from "express-validator";
 import "../config/passport";
+import {AttachedDatabaseModel} from "../models/AttachedDatabase";
+
+
+import DatabaseHandler from "../cms/databaseHandler";
+import {User as StageUser} from "../cms/shared/models/User";
+import {Board} from "../cms/board/models/Board";
+import {Post} from "../cms/board/models/Post";
+import {Tech} from "../cms/portfolio/models/Tech";
+import {Project} from "../cms/portfolio/models/Project";
+import {decrypt} from "../util/cryptoHelper";
 
 /**
  * GET /login
@@ -51,8 +61,27 @@ export const postLogin = async (req: Request, res: Response, next: NextFunction)
             if(!user.selected) console.log("No select");
             res.redirect(req.session.returnTo || "/");
         });
+        getExternalDbConnectionParams(user);
     })(req, res, next);
 };
+
+
+
+function getExternalDbConnectionParams(user: UserDocument) {
+    AttachedDatabaseModel.findOne({"userEmail": user.email}, (err, attachedDb) => {
+        if(err) {console.log(err);}
+        const externalDb = DatabaseHandler;
+        externalDb.createConnection(attachedDb.type, attachedDb.host, attachedDb.port,
+            attachedDb.username, decrypt(attachedDb.password), attachedDb.database,
+            [StageUser, Board, Post, Tech, Project]); // todo: this have to be imported based on the selected template
+
+        externalDb.getConnection()
+            .then(_ => console.log("Connection to external db successful"))
+            .catch(e => console.log(e));
+
+    });
+
+}
 
 /**
  * GET /logout
