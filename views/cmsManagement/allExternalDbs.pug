@@ -2,6 +2,14 @@ extends ../layout
 
 block content
     #container
+
+        // the selected property is on the user (main actor) not on the attached database :)
+        if user.selected
+            - list = ['Blog', 'Board', 'Portfolio']
+            h1=("You selected template is [" + list[user.selected - 1] + "]")
+        else
+            h1 You may select a template
+
         if error
             h1= error
         else
