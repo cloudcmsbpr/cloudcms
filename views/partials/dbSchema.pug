@@ -1,0 +1,12 @@
+if user.selected
+    - list = ['Blog', 'Board', 'Portfolio']
+    h3=("Showing schema for [" + list[user.selected - 1] + "]")
+    br
+    br
+    div.container-fluid.row
+        each entity in Object.keys(schema)
+            div.card.col-sm-3(style='border: 1px solid gray')
+                div.card-body
+                    h5.card-title=entity
+                    each attribute in Object.keys(schema[entity])
+                        div.card-text=attribute
