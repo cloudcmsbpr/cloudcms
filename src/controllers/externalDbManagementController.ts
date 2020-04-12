@@ -8,11 +8,11 @@ import {EntitySchema} from "typeorm";
 export default class ExternalDbManagementController {
     static getMainPage = async (req: Request, res: Response) => {
         return await ExternalDbManagementController.handleSelectedSchema(req).
-        then(data => {res.render("cmsManagement/databaseManagement", {schema: data})})
+        then(data => {res.render("cmsManagement/databaseManagement", {schema: data});})
             .catch(err => {
                 req.flash("errors", err);
-                res.render("cmsManagement/databaseManagement")
-            })
+                res.render("cmsManagement/databaseManagement");
+            });
     };
 
     private static handleSelectedSchema = async (req: Request) => {
@@ -22,10 +22,10 @@ export default class ExternalDbManagementController {
                 return {};
             case 2:
                 // @ts-ignore
-                return await ExternalDbManagementController.getMetadataFromList(['Board', 'Post'], req.user.email);
+                return await ExternalDbManagementController.getMetadataFromList(["Board", "Post"], req.user.email);
             case 3:
                 // @ts-ignore
-                return await ExternalDbManagementController.getMetadataFromList(['Tech', 'Project'], req.user.email);
+                return await ExternalDbManagementController.getMetadataFromList(["Tech", "Project"], req.user.email);
             default:
                 return {};
         }
@@ -33,12 +33,12 @@ export default class ExternalDbManagementController {
 
     private static getMetadataFromList = async (list: string[], userEmail: string) => {
         return await Promise.all(list.map(e => {
-            return ExternalDbManagementController.getEntityMetadata(e, userEmail)
+            return ExternalDbManagementController.getEntityMetadata(e, userEmail);
         })).then((res) => {
-            let ass = {};
+            const ass = {};
             for(let i = 0; i < list.length; i++) {
                 // @ts-ignore
-                ass[list[i]] = res[i]
+                ass[list[i]] = res[i];
             }
             return ass;
         });
@@ -47,6 +47,6 @@ export default class ExternalDbManagementController {
     private static getEntityMetadata = async (e: string, userEmail: string) => {
         return await DatabaseHandler.getExternalDbConnectionWithParams(userEmail)
             .then(res => res.getMetadata(e))
-            .then(res => res.propertiesMap)
+            .then(res => res.propertiesMap);
     }
 }

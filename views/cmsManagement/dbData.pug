@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+    - list = ['Blog', 'Board', 'Portfolio']
+    h3 Current template is #{(list[user.selected - 1])}
+    div.container-fluid.row
+        each val,key in dbdata
+            div(style='border: 1px solid gray; width:100%')
+                h4 #{key}
+                each v, k in val
+                    div.card.col-sm-3.d-inline-block(style='border: 1px solid gray')
+                        each n,s in v
+                            p #{s}: #{n}
