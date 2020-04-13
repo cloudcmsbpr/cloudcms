@@ -12,6 +12,9 @@ import selectTemplateController from "./controllers/selectTemplateController";
 import externalDbManagementController from "./controllers/externalDbManagementController";
 import databaseDataController from "./controllers/databaseDataController";
 import editEntityController from "./controllers/editEntityController";
+import AuthController from "./cms/shared/controllers/authController";
+import UserController from "./cms/shared/controllers/userController";
+import {checkJwt} from "./cms/shared/middleware/authMiddleware";
 
 export default class Routes {
 
@@ -60,6 +63,12 @@ export default class Routes {
         this.app.post("/saveEntity", passportConfig.isAuthenticated, editEntityController.save);
         this.app.post("/deleteEntity", passportConfig.isAuthenticated, editEntityController.delete);
         this.app.get("/editEntity", passportConfig.isAuthenticated, editEntityController.getEditPage);
+        
+        // user routes
+        this.app.post("/users/login", AuthController.login); // login
+        this.app.post("/users/signup", UserController.newUser); // signup
+        this.app.get("/users/getall", [checkJwt], UserController.listAll); // sample get with jwt
+        this.app.post("/users/delete", [checkJwt], UserController.deleteUser); // sample get with jwt
 
         this.setPortfolioRoutes();
         this.setBlogRoutes();

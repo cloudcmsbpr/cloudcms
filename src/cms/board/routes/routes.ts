@@ -7,12 +7,6 @@ import {createNewBoard, deleteBoard, editBoard, getAllBoards, getBoardById} from
 import {createNewPost, deletePost, editPost, getAllPosts, getPostById} from "../controllers/postController";
 
 export const routes: SingleRoute[] = [
-    // User
-    new SingleRoute("post", "/users/login", AuthController.login, []), // login
-    new SingleRoute("post", "/users/signup", UserController.newUser, []), // signup
-    new SingleRoute("get", "/users/getall", UserController.listAll,  []), // sample get with jwt
-    new SingleRoute("post", "/users/delete", UserController.deleteUser,  [checkJwt]), // sample get with jwt
-
     // Board
     new SingleRoute("get", "/board/getAllBoards", getAllBoards, []),
     new SingleRoute("get", "/board/getBoardById", getBoardById, []),
