@@ -5,9 +5,23 @@ block content
     h3 Current template is #{(list[user.selected - 1])}
     div.container-fluid.row
         each val,key in dbdata
-            div(style='border: 1px solid gray; width:100%')
-                h4 #{key}
+            div.row(style='border: 1px solid gray; width:100%; margin-top:5px;')
+                div.col-sm-12.row(style='padding:10px')
+                    h4.col-sm-6 #{key}
+                    form.col-sm-1.offset-sm-5(action='/editEntity', method='GET')
+                        input(hidden=true, name='entity', value=key.substring(0, key.length - 1))
+                        button.btn.btn-info Add
                 each v, k in val
                     div.card.col-sm-3.d-inline-block(style='border: 1px solid gray')
                         each n,s in v
                             p #{s}: #{n}
+                        form(action='/editEntity', method='GET')
+                            input(hidden=true, name='id', value=v['id'])
+                            input(hidden=true, name='entity', value=key.substring(0, key.length - 1))
+                            button.btn.btn-primary(type='submit') Edit
+                        form(action='/deleteEntity', method='POST')
+                            input(hidden=true, name='entityId', value=v['id'])
+                            input(hidden=true, name='entity', value=key.substring(0, key.length - 1))
+                            button(type='submit'
+                                style='position:absolute;top:0px;right:0px;background:darkred'
+                            ) x

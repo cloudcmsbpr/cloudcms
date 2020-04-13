@@ -40,9 +40,9 @@ export default class DatabaseDataController {
             case 3:
                 try {
                     // @ts-ignore
-                    data.boards = await DatabaseDataController.getAllDataFromDatabase(Tech, req.user);
+                    data.techs = await DatabaseDataController.getAllDataFromDatabase(Tech, req.user);
                     // @ts-ignore
-                    data.posts = await DatabaseDataController.getAllDataFromDatabase(Project, req.user);
+                    data.projects = await DatabaseDataController.getAllDataFromDatabase(Project, req.user);
                 } catch (e) {
                     console.log(e);
                 }

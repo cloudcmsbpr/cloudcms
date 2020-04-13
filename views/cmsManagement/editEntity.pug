@@ -1,0 +1,18 @@
+extends ../layout
+
+block content
+    #container
+
+        br
+        h1=('Add/Edit ' + dataFor)
+        form(action='/saveEntity', method='POST')
+            input(hidden=true, name='dataFor', value=dataFor)
+            div.form-group.container-fluid.row
+                each entry in (data[dataFor] ? Object.keys(data[dataFor]) : Object.keys(data))
+                    if entry !== 'id'
+                        label.col-sm-2(for=entry)=(entry)
+                        input.form-control.col-sm-10(type='text', name=entry, value=data[entry])
+                    else
+                        input(name='id', value=data[entry] hidden=true)
+                br
+                button.btn.btn-primary(type='submit') Save

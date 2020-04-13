@@ -11,6 +11,7 @@ import externalDbController from "./controllers/externalDbController";
 import selectTemplateController from "./controllers/selectTemplateController";
 import externalDbManagementController from "./controllers/externalDbManagementController";
 import databaseDataController from "./controllers/databaseDataController";
+import editEntityController from "./controllers/editEntityController";
 
 export default class Routes {
 
@@ -54,6 +55,11 @@ export default class Routes {
 
         // database data
         this.app.get("/dbdata", passportConfig.isAuthenticated, databaseDataController.getDatabaseDataPage);
+
+        // edit entity data
+        this.app.post("/saveEntity", passportConfig.isAuthenticated, editEntityController.save);
+        this.app.post("/deleteEntity", passportConfig.isAuthenticated, editEntityController.delete);
+        this.app.get("/editEntity", passportConfig.isAuthenticated, editEntityController.getEditPage);
 
         this.setPortfolioRoutes();
         this.setBlogRoutes();
