@@ -31,7 +31,7 @@ export default class ExternalDbManagementController {
         }
     };
 
-    private static getMetadataFromList = async (list: string[], userEmail: string) => {
+    public static getMetadataFromList = async (list: string[], userEmail: string) => {
         return await Promise.all(list.map(e => {
             return ExternalDbManagementController.getEntityMetadata(e, userEmail);
         })).then((res) => {

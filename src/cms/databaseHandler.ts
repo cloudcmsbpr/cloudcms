@@ -47,9 +47,10 @@ export default class DatabaseHandler {
             catch {
                 AttachedDatabaseModel.findOne({"userEmail": userEmail}, (err, attachedDb) => {
                     if (err) {
+                        console.log('-----------------------------');
                         console.log(err);
                     }
-                    if (attachedDb.type === "postgres" || attachedDb.type === "mongodb") {
+                    if (attachedDb && (attachedDb.type === "postgres" || attachedDb.type === "mongodb")) {
                         resolve(createConnection({
                             type: attachedDb.type, host: attachedDb.host, port: attachedDb.port,
                             username: attachedDb.username, password: decrypt(attachedDb.password),
