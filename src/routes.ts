@@ -10,6 +10,7 @@ import SingleRoute from "./cms/util/SingleRoute";
 import externalDbController from "./controllers/externalDbController";
 import selectTemplateController from "./controllers/selectTemplateController";
 import externalDbManagementController from "./controllers/externalDbManagementController";
+import databaseDataController from "./controllers/databaseDataController";
 
 export default class Routes {
 
@@ -50,6 +51,9 @@ export default class Routes {
 
         // database management
         this.app.get("/dbManagement", passportConfig.isAuthenticated, externalDbManagementController.getMainPage);
+
+        // database data
+        this.app.get("/dbdata", passportConfig.isAuthenticated, databaseDataController.getDatabaseDataPage);
 
         this.setPortfolioRoutes();
         this.setBlogRoutes();

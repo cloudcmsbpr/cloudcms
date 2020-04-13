@@ -8,7 +8,7 @@ const username = "user2";
 const userId = 0;
 
 let tech: any = {};
-let project: any = {};
+const project: any = {};
 
 // generate valid token for this test session
 const token = jwt.sign(
@@ -60,28 +60,28 @@ test("edit tech", () => {
     }).catch(err => console.log(err));
 });
 
-test("add project", () => {
-    expect.assertions(4);
-    const data = {
-        name: "BFP",
-        image_url: "some_image_url",
-        description: "some description",
-        start_date: new Date().toString(),
-        end_date: new Date().toString(),
-        git_link: "some git link",
-        web_link: "some_web_link",
-        other: "other data",
-        // @ts-ignore
-        techs: []
-    };
-    return axios.post(path + "/portfolio/add_project", data, {headers: {auth: token}}).then((res: any) => {
-        project = res.data;
-        expect(res.status).toEqual(200);
-        expect(res.data.name).toEqual(data.name);
-        expect(res.data.start_date).toEqual(data.start_date);
-        expect(res.data.web_link).toEqual(data.web_link);
-    }).catch(err => console.log(err));
-});
+// test("add project", () => {
+//     expect.assertions(4);
+//     const data = {
+//         name: "BFP",
+//         image_url: "some_image_url",
+//         description: "some description",
+//         start_date: new Date().toString(),
+//         end_date: new Date().toString(),
+//         git_link: "some git link",
+//         web_link: "some_web_link",
+//         other: "other data",
+//         // @ts-ignore
+//         techs: []
+//     };
+//     return axios.post(path + "/portfolio/add_project", data, {headers: {auth: token}}).then((res: any) => {
+//         project = res.data;
+//         expect(res.status).toEqual(200);
+//         expect(res.data.name).toEqual(data.name);
+//         expect(res.data.start_date).toEqual(data.start_date);
+//         expect(res.data.web_link).toEqual(data.web_link);
+//     }).catch(err => console.log(err));
+// });
 
 test("get project by id", () => {
     expect.assertions(2);

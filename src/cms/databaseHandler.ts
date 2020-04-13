@@ -42,7 +42,7 @@ export default class DatabaseHandler {
     static getExternalDbConnectionWithParams(userEmail: string): Promise<any> {
         return new Promise((resolve, reject) => {
             try {
-                resolve(getConnectionManager().get("default"))
+                resolve(getConnectionManager().get("default"));
             }
             catch {
                 AttachedDatabaseModel.findOne({"userEmail": userEmail}, (err, attachedDb) => {
@@ -63,6 +63,5 @@ export default class DatabaseHandler {
                 });
             }
         });
-
     }
 }
