@@ -3,7 +3,7 @@ import axios from "axios";
 import * as jwt from "jsonwebtoken";
 import {SESSION_SECRET} from "../../src/util/secrets";
 
-const username = "user2";
+const username = "user1@mail.com";
 const password = "password123";
 const path = "http://localhost:5000";
 let userId = 0;
