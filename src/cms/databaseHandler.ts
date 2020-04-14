@@ -42,22 +42,36 @@ export default class DatabaseHandler {
     static getExternalDbConnectionWithParams(userEmail: string): Promise<any> {
         return new Promise((resolve, reject) => {
             try {
-                resolve(getConnectionManager().get("default"));
+                if(this.connection) {
+                    resolve(this.connection);
+                } else {
+                    resolve(getConnectionManager().get("default"));
+                }
             }
             catch {
-                AttachedDatabaseModel.findOne({"userEmail": userEmail}, (err, attachedDb) => {
+                AttachedDatabaseModel.findOne({"userEmail": userEmail}, (err, attachedDbInfo) => {
                     if (err) {
-                        console.log('-----------------------------');
+                        console.log("-----------------------------");
                         console.log(err);
+                        reject(err);
                     }
-                    if (attachedDb && (attachedDb.type === "postgres" || attachedDb.type === "mongodb")) {
-                        resolve(createConnection({
-                            type: attachedDb.type, host: attachedDb.host, port: attachedDb.port,
-                            username: attachedDb.username, password: decrypt(attachedDb.password),
-                            database: attachedDb.database,
-                            entities: [StageUser, Board, Post, Tech, Project],
-                            synchronize: true, logging: false
-                        })); // todo: this have to be imported based on the selected template
+                    if (attachedDbInfo && (attachedDbInfo.type === "postgres" || attachedDbInfo.type === "mongodb")) {
+                        try {
+                            const con = createConnection({
+                                type: attachedDbInfo.type, host: attachedDbInfo.host, port: attachedDbInfo.port,
+                                username: attachedDbInfo.username, password: decrypt(attachedDbInfo.password),
+                                database: attachedDbInfo.database,
+                                entities: [StageUser, Board, Post, Tech, Project],
+                                synchronize: true, logging: false
+                            });
+                            if(con) {
+                                this.connection = con;
+                                resolve(con);
+                            }
+                        } catch (e) {
+                            console.log(e);
+                            reject(e);
+                        }
                     } else {
                         reject("Connection type must be postgres | mongodb");
                     }

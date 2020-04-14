@@ -13,46 +13,46 @@ export default class EditEntityController {
                 } else {
                     req.flash("errors", { msg: `${e}` });
                 }
-                res.redirect('/dbdata')
+                res.redirect("/dbdata");
             });
     };
 
     static delete = async (req: Request, res: Response) => {
         if(!req.body.entityId) {
-            req.flash("errors", { msg: 'no entity id provided' });
-            res.redirect('/dbdata');
+            req.flash("errors", { msg: "no entity id provided" });
+            res.redirect("/dbdata");
         }
         if(!req.body.entity) {
-            req.flash("errors", { msg: 'no entity provided' });
-            res.redirect('/dbdata');
+            req.flash("errors", { msg: "no entity provided" });
+            res.redirect("/dbdata");
         }
         // @ts-ignore
         const repo = getRepository(req.body.entity);
         repo.delete(req.body.entityId)
             .then(_ => {
                 req.flash("info", { msg: `${req.body.entity}: ${req.body.entityId} deleted.` });
-                res.redirect('/dbdata');
+                res.redirect("/dbdata");
             })
             .catch(e => {
                 req.flash("errors", { msg: `${e}` });
-                res.redirect('/dbdata');
-            })
+                res.redirect("/dbdata");
+            });
     };
 
     static getEditPage = async (req: Request, res: Response) => {
         if(req.query.entity) {
             if(req.query.id) {
-                let entityCap = req.query.entity.charAt(0).toUpperCase() + req.query.entity.slice(1);
+                const entityCap = req.query.entity.charAt(0).toUpperCase() + req.query.entity.slice(1);
                 // @ts-ignore
                 DatabaseHandler.getExternalDbConnectionWithParams(req.user.email)
                     .then(r => r.getRepository(entityCap))
                     .then(r => r.findOneOrFail({id: req.query.id}))
                     .then(r => {
-                        res.render("cmsManagement/editEntity", {data: r, dataFor: entityCap})
+                        res.render("cmsManagement/editEntity", {data: r, dataFor: entityCap});
                     })
                     .catch(e => {
                         res.send({notFound: `${entityCap}: ${req.query.id}`});
-                    })
+                    });
             } else {
                 // @ts-ignore
                 const x = await ExternalDbManagementController.getMetadataFromList([req.query.entity], req.user.email);

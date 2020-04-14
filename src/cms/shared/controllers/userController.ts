@@ -3,7 +3,6 @@ import { getRepository } from "typeorm";
 import { validate } from "class-validator";
 
 import { User } from "../../shared/models/User";
-import DatabaseHandler from "../../databaseHandler";
 
 class UserController{
 
@@ -40,7 +39,7 @@ class UserController{
         user.username = username;
         user.password = password;
 
-        //Validate if the parameters are ok
+        //Validade if the parameters are ok
         const errors = await validate(user);
         if (errors.length > 0) {
             res.status(400).send(errors);
@@ -50,20 +49,17 @@ class UserController{
         //Hash the password, to securely store on DB
         user.hashPassword();
 
-        DatabaseHandler.getExternalDbConnectionWithParams("user1@mail.com")
-            .then(_ => {
-                //Try to save. If fails, the username is already in use
-                const userRepository = getRepository(User);
-                try {
-                    userRepository.save(user);
-                } catch (e) {
-                    res.status(409).send("username already in use");
-                    return;
-                }
+        //Try to save. If fails, the username is already in use
+        const userRepository = getRepository(User);
+        try {
+            await userRepository.save(user);
+        } catch (e) {
+            res.status(409).send("username already in use");
+            return;
+        }
 
-                //If all ok, send 201 response
-                res.status(201).send("User created");
-            });
+        //If all ok, send 201 response
+        res.status(201).send("User created");
     };
 
     static editUser = async (req: Request, res: Response) => {

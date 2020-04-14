@@ -3,7 +3,7 @@ import axios from "axios";
 import * as jwt from "jsonwebtoken";
 import {SESSION_SECRET} from "../../src/util/secrets";
 
-const username = "user1@mail.com";
+const username = "user16";
 const password = "password123";
 const path = "http://localhost:5000";
 let userId = 0;
@@ -11,8 +11,8 @@ let userId = 0;
 
 // generate valid token for this test session
 const token = jwt.sign(
-    { userId: userId, username: username }, SESSION_SECRET,
-    { expiresIn: "1h" }
+    {userId: userId, username: username}, SESSION_SECRET,
+    {expiresIn: "1h"}
 );
 
 test("create user account", () => {

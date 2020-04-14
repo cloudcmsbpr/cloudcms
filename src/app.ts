@@ -10,12 +10,13 @@ import mongoose from "mongoose";
 import passport from "passport";
 import bluebird from "bluebird";
 import "reflect-metadata";
-import { MONGODB_URI, SESSION_SECRET} from "./util/secrets";
+import { MONGODB_URI, SESSION_SECRET, EXTERNAL_DB_USER_EMAIL} from "./util/secrets";
 
 const MongoStore = mongo(session);
 
 import * as apiController from "./controllers/api";
 import Routes from "./routes";
+import DatabaseHandler from "./cms/databaseHandler";
 
 
 // Create Express server
@@ -85,5 +86,13 @@ new Routes(app).setRoutes();
  * API examples routes.
  */
 app.get("/api", apiController.getApi);
+
+// connect to external Db (if any)
+DatabaseHandler.getExternalDbConnectionWithParams(EXTERNAL_DB_USER_EMAIL)
+    .then(_ => console.log("External db connected successfully"))
+    .catch(e => {
+        console.log("External db error");
+        console.log(e);
+    });
 
 export default app;
