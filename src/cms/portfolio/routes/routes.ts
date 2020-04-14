@@ -8,9 +8,7 @@ import {
     getTechById
 } from "../controllers/portfolioController";
 import SingleRoute from "../../util/SingleRoute";
-import AuthController from "../../shared/controllers/authController";
 import { checkJwt } from "../../shared/middleware/authMiddleware";
-import UserController from "../../shared/controllers/userController";
 
 
 // the authenticated field is from passport, we may either remove it or replace it
@@ -28,8 +26,4 @@ export const routes: SingleRoute[] = [
     new SingleRoute("post", "/portfolio/edit_project", editProject, [checkJwt]),
     new SingleRoute("post", "/portfolio/delete_tech", deleteTech, [checkJwt]),
     new SingleRoute("post", "/portfolio/delete_project", deleteProject, [checkJwt]),
-    new SingleRoute("post", "/users/login", AuthController.login, []), // login
-    new SingleRoute("post", "/users/signup", UserController.newUser, []), // signup
-    new SingleRoute("get", "/users/getall", UserController.listAll,  [checkJwt]), // sample get with jwt
-    new SingleRoute("post", "/users/delete", UserController.deleteUser,  [checkJwt]), // sample get with jwt
 ];
