@@ -73,7 +73,7 @@ export default class DatabaseHandler {
                             reject(e);
                         }
                     } else {
-                        reject("Connection type must be postgres | mongodb");
+                        reject("Either no db attached or the connection type is wrong");
                     }
                 });
             }

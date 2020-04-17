@@ -15,7 +15,7 @@ export default class DatabaseDataController {
                 res.render("cmsManagement/dbData", {dbdata: data});
             })
             .catch(err => {
-                req.flash("errors", err);
+                req.flash("errors", {msg: err});
                 res.render("cmsManagement/dbData");
             });
     };
