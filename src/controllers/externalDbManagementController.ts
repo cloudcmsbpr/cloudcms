@@ -7,11 +7,10 @@ import {EntitySchema} from "typeorm";
 
 export default class ExternalDbManagementController {
     static getMainPage = async (req: Request, res: Response) => {
-        return await ExternalDbManagementController.handleSelectedSchema(req).
-        then(data => {res.render("cmsManagement/databaseManagement", {schema: data});})
-            .catch(err => {
-                req.flash("errors", err);
-                res.render("cmsManagement/databaseManagement");
+        return await ExternalDbManagementController.handleSelectedSchema(req)
+            .then(data => {res.render("cmsManagement/databaseManagement", {schema: data});})
+            .catch(() => {
+                return res.render("cmsManagement/databaseManagement", {schema: null});
             });
     };
 
