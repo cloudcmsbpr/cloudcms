@@ -11,7 +11,7 @@ export default class EditEntityController {
                 if(e.id) {
                     req.flash("info", { msg: `id: ${e.id} saved` });
                 } else {
-                    req.flash("errors", { msg: `${e}` });
+                    req.flash("info", { msg: `id: ${req.body.id} saved\`` });
                 }
                 res.redirect("/dbdata");
             });
@@ -27,7 +27,7 @@ export default class EditEntityController {
             res.redirect("/dbdata");
         }
         // @ts-ignore
-        const repo = getRepository(req.body.entity);
+        const repo = getRepository(req.body.entity.charAt(0).toUpperCase() + req.body.entity.slice(1));
         repo.delete(req.body.entityId)
             .then(_ => {
                 req.flash("info", { msg: `${req.body.entity}: ${req.body.entityId} deleted.` });
@@ -55,8 +55,8 @@ export default class EditEntityController {
                     });
             } else {
                 // @ts-ignore
-                const x = await ExternalDbManagementController.getMetadataFromList([req.query.entity], req.user.email);
-                return res.render("cmsManagement/editEntity", {data: x, dataFor: req.query.entity});
+                const x = await ExternalDbManagementController.getMetadataFromList([req.query.entity.charAt(0).toUpperCase() + req.query.entity.slice(1)], req.user.email);
+                return res.render("cmsManagement/editEntity", {data: x, dataFor: req.query.entity.charAt(0).toUpperCase() + req.query.entity.slice(1)});
             }
         }
     };
