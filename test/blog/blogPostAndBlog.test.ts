@@ -25,19 +25,19 @@ test("add blog", () => {
         // @ts-ignore
         blogPosts: []
     };
-    return axios.post(path + "/blog/add_blog", data, {headers: {auth: token}}).then((res: any) => {
-        blog = res.data;
-        expect(res.status).toEqual(200);
-        expect(res.data.name).toEqual(data.name);
-        expect(res.data.author).toEqual(data.author);
-    }).catch(err => console.log(err));
+    return axios.post(path + "/blog/add_blog", data, {headers: {auth: token}})
+        .then((res: any) => {
+            blog = res.data;
+            expect(res.status).toEqual(200);
+            expect(res.data.name).toEqual(data.name);
+            expect(res.data.author).toEqual(data.author);
+        }).catch(err => console.log(err));
 });
 
 test("get all blogs", () => {
     expect.assertions(3);
     return axios.get(path + "/blog/blogs")
-        .then(res => {
-            blog = res.data;
+        .then((res: any) => {
             expect(res.status).toEqual(200);
             expect(res.data.length).toBeGreaterThan(0);
             expect(res.data.filter((e: any) =>
@@ -48,15 +48,15 @@ test("get all blogs", () => {
 test("edit blog", () => {
     expect.assertions(3);
     const data = {
-        id: 21,
+        id: 26,
         name: Math.random().toString(36).substring(7)
     };
-    return axios.post(path + "/blog/edit_blog", data, {headers: {auth: token}}).then((res: any) => {
-        blog = res.data;
-        expect(res.status).toEqual(200);
-        expect(res.data.name).toEqual(data.name);
-        expect(res.data.id).toEqual(data.id);
-    }).catch(err => console.log(err));
+    return axios.post(path + "/blog/edit_blog", data, {headers: {auth: token}})
+        .then((res: any) => {
+            expect(res.status).toEqual(200);
+            expect(res.data.name).toEqual(data.name);
+            expect(res.data.id).toEqual(data.id);
+        }).catch(err => console.log(err));
 });
 
 test("delete blog", () => {
@@ -64,32 +64,41 @@ test("delete blog", () => {
     const data = {
         ...blog
     };
-    return axios.post(path + "/blog/delete_blog", data, {headers: {auth: token}}).then((res: any) => {
-        blog = res.data;
-        expect(res.status).toEqual(200);
-        expect(res.data.id).toEqual(data.id);
-    }).catch(err => console.log(err));
+    return axios.post(path + "/blog/delete_blog", data, {headers: {auth: token}})
+        .then((res: any) => {
+            expect(res.status).toEqual(200);
+            expect(res.data.id).toEqual(data.id);
+        }).catch(err => console.log(err));
 });
 
 test("add blog post", () => {
-    expect.assertions(3);
+    expect.assertions(2);
     const data = {
         name: "p1",
         description: "first blog post",
     };
-    return axios.post(path + "/blog/add_blog_post", data, {headers: {auth: token}}).then((res: any) => {
-        blog = res.data;
+    return axios.post(path + "/blog/add_blog_post", data, {headers: {auth: token}})
+        .then((res: any) => {
+            blog = res.data;
+            expect(res.status).toEqual(200);
+            expect(res.data.name).toEqual(data.name);
+        }).catch(err => console.log(err));
+});
+
+test("get blog post by id", () => {
+    expect.assertions(2);
+    return axios.get(path + "/blog/get_blog_post_by_id", {
+        params: {id: blogPost.id}
+    }).then((res: any) => {
         expect(res.status).toEqual(200);
-        expect(res.data.name).toEqual(data.name);
-        expect(res.data.description).toEqual(data.description);
+        expect(res.data.id).toEqual(blogPost.id);
     }).catch(err => console.log(err));
 });
 
 test("get all blog posts", () => {
     expect.assertions(3);
-    return axios.get(path + "/blog/blog_posts")
-        .then(res => {
-            blogPost = res.data;
+    return axios.get(path + "/blog/blog_posts", {})
+        .then((res: any) => {
             expect(res.status).toEqual(200);
             expect(res.data.length).toBeGreaterThan(0);
             expect(res.data.filter((e: any) =>
@@ -100,25 +109,26 @@ test("get all blog posts", () => {
 test("edit blog post", () => {
     expect.assertions(3);
     const data = {
-        id: 5,
-        name: Math.random().toString(36).substring(7)
+        ...blogPost
     };
-    return axios.post(path + "/blog/edit_blog_post", data, {headers: {auth: token}}).then((res: any) => {
-        blogPost = res.data;
-        expect(res.status).toEqual(200);
-        expect(res.data.name).toEqual(data.name);
-        expect(res.data.id).toEqual(data.id);
-    }).catch(err => console.log(err));
+    data.id = 5;
+    data.name = Math.random().toString(36).substring(7);
+    return axios.post(path + "/blog/edit_blog_post", data, {headers: {auth: token}})
+        .then((res: any) => {
+            expect(res.status).toEqual(200);
+            expect(res.data.name).toEqual(data.name);
+            expect(res.data.id).toEqual(data.id);
+        }).catch(err => console.log(err));
 });
 
 test("delete blog post", () => {
     expect.assertions(2);
     const data = {
-        ...blogPost
+        id: blogPost.id
     };
-    return axios.post(path + "/blog/delete_blog_post", data, {headers: {auth: token}}).then((res: any) => {
-        blog = res.data;
-        expect(res.status).toEqual(200);
-        expect(res.data.id).toEqual(data.id);
-    }).catch(err => console.log(err));
+    return axios.post(path + "/blog/delete_blog_post", data, {headers: {auth: token}})
+        .then((res: any) => {
+            expect(res.status).toEqual(200);
+            expect(res.data.id).toEqual(data.id);
+        }).catch(err => console.log(err));
 });

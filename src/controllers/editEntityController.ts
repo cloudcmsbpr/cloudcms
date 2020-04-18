@@ -11,7 +11,7 @@ export default class EditEntityController {
                 if(e.id) {
                     req.flash("info", { msg: `id: ${e.id} saved` });
                 } else {
-                    req.flash("info", { msg: `id: ${req.body.id} saved\`` });
+                    req.flash("info", { msg: `id: ${req.body.id} saved` });
                 }
                 res.redirect("/dbdata");
             });
