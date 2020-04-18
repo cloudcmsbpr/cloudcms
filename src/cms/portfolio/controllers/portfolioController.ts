@@ -7,7 +7,7 @@ import {edit, foof, remove, save} from "../../shared/helpers/databaseHelpers";
 
 
 
-function create<T>(req: Request, params: string[]): any {
+export function create<T>(req: Request, params: string[]): any {
     const pDic: any = {};
     for (const i of params) {
         if (!req.body[i]) {

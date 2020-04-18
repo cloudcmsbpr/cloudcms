@@ -1,6 +1,8 @@
 import {Request, Response} from "express";
 import {Tech} from "../cms/portfolio/models/Tech";
 import {Project} from "../cms/portfolio/models/Project";
+import {Blog} from "../cms/blog/models/Blog";
+import {BlogPost} from "../cms/blog/models/BlogPost";
 import DatabaseHandler from "../cms/databaseHandler";
 import {EntitySchema} from "typeorm";
 
@@ -18,7 +20,8 @@ export default class ExternalDbManagementController {
         // @ts-ignore
         switch (req.user.selected * 1) {
             case 1:
-                return {};
+                // @ts-ignore
+                return await ExternalDbManagementController.getMetadataFromList(["Blog", "BlogPost"], req.user.email);
             case 2:
                 // @ts-ignore
                 return await ExternalDbManagementController.getMetadataFromList(["Board", "Post"], req.user.email);
