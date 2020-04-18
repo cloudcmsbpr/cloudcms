@@ -1,6 +1,6 @@
-export const IsAnyUndefined = (...args: any) => {
+export const IsAnyUndefined = (body: any, args: string[]) => {
     for(const p of args) {
-        if(p === undefined) return true;
+        if(!body[p]) return p;
     }
     return false;
 };

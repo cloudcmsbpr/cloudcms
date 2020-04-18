@@ -10,3 +10,6 @@ if user.selected
                     h5.card-title=entity
                     each attribute in Object.keys(schema[entity])
                         div.card-text=attribute
+else
+    p No template selected
+

@@ -2,4 +2,5 @@ extends ../layout
 
 block content
     #container
-        include ../partials/dbSchema
+        if schema
+            include ../partials/dbSchema
