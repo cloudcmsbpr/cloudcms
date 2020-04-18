@@ -5,6 +5,8 @@ import DatabaseHandler from "../cms/databaseHandler";
 import {UserDocument} from "../models/User";
 import {Tech} from "../cms/portfolio/models/Tech";
 import {Project} from "../cms/portfolio/models/Project";
+import {Blog} from "../cms/blog/models/Blog";
+import {BlogPost} from "../cms/blog/models/BlogPost";
 
 export default class DatabaseDataController {
 
@@ -26,7 +28,15 @@ export default class DatabaseDataController {
         // @ts-ignore
         switch (req.user.selected * 1) {
             case 1:
-                return {};
+                try {
+                    // @ts-ignore
+                    data.blogPosts = await DatabaseDataController.getAllDataFromDatabase(BlogPost, req.user);
+                    // @ts-ignore
+                    data.blogs = await DatabaseDataController.getAllDataFromDatabase(Blog, req.user);
+                } catch (e) {
+                    console.log(e);
+                }
+                return await data;
             case 2:
                 try {
                     // @ts-ignore
@@ -66,5 +76,4 @@ export default class DatabaseDataController {
             return e[index];
         });
     }
-
 }

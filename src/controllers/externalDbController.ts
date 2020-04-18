@@ -66,7 +66,7 @@ export default class ExternalDbController {
             .catch(err => {
                 req.flash("errors", {msg: "Database connection failed -> " + JSON.stringify(err)});
                 return res.redirect("/externaldb/mydatabases");
-            })
+            });
     };
 
     static getAll = async (req: Request, res: Response) => {

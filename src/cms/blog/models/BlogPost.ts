@@ -1,10 +1,9 @@
 import {Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import {Length} from "class-validator";
-import {Blog} from "./Blog";
 
 
 @Entity()
-export class BlogPost{
+export class BlogPost {
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -12,6 +11,7 @@ export class BlogPost{
     @Length(1, 100)
     name: string;
 
-    @ManyToMany(type => Blog)
-    blog: BlogPost[]
+    @Column()
+    @Length(0, 1000)
+    description: string
 }
