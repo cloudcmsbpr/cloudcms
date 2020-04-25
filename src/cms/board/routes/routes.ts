@@ -5,19 +5,20 @@ import AuthController from "../../shared/controllers/authController";
 import UserController from "../../shared/controllers/userController";
 import {createNewBoard, deleteBoard, editBoard, getAllBoards, getBoardById} from "../controllers/boardController";
 import {createNewPost, deletePost, editPost, getAllPosts, getPostById} from "../controllers/postController";
+import cors from "cors";
 
 export const routes: SingleRoute[] = [
     // Board
-    new SingleRoute("get", "/board/getAllBoards", getAllBoards, []),
-    new SingleRoute("get", "/board/getBoardById", getBoardById, []),
-    new SingleRoute("post", "/board/createNewBoard", createNewBoard, []),
-    new SingleRoute("post", "/board/editBoard", editBoard, []),
-    new SingleRoute("post", "/board/deleteBoard", deleteBoard, []),
+    new SingleRoute("get", "/board/getAllBoards", getAllBoards, [cors()]),
+    new SingleRoute("get", "/board/getBoardById", getBoardById, [cors()]),
+    new SingleRoute("post", "/board/createNewBoard", createNewBoard, [cors()]),
+    new SingleRoute("post", "/board/editBoard", editBoard, [cors()]),
+    new SingleRoute("post", "/board/deleteBoard", deleteBoard, [cors()]),
 
     // Post
-    new SingleRoute("get", "/post/getAllPosts", getAllPosts, []),
-    new SingleRoute("get", "/post/getPostById", getPostById, []),
-    new SingleRoute("post", "/post/createNewPost", createNewPost, []),
-    new SingleRoute("post", "/post/editPost", editPost, []),
-    new SingleRoute("post", "/post/deletePost", deletePost, []),
+    new SingleRoute("get", "/post/getAllPosts", getAllPosts, [cors()]),
+    new SingleRoute("get", "/post/getPostById", getPostById, [cors()]),
+    new SingleRoute("post", "/post/createNewPost", createNewPost, [cors()]),
+    new SingleRoute("post", "/post/editPost", editPost, [cors()]),
+    new SingleRoute("post", "/post/deletePost", deletePost, [cors()]),
 ];

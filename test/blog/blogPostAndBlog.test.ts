@@ -9,7 +9,7 @@ const path = "http://localhost:5000";
 const userId = 0;
 
 let blog: any = {};
-let blogPost: any = {};
+const blogPost: any = {};
 
 // generate valid token for this test session
 const token = jwt.sign(

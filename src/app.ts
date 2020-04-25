@@ -11,6 +11,7 @@ import passport from "passport";
 import bluebird from "bluebird";
 import "reflect-metadata";
 import { MONGODB_URI, SESSION_SECRET, EXTERNAL_DB_USER_EMAIL} from "./util/secrets";
+import cors from "cors";
 
 const MongoStore = mongo(session);
 
@@ -34,6 +35,7 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useCreateIndex: true, useUni
 });
 
 // Express configuration
+app.options("*", cors());
 app.set("port", process.env.PORT || 3000);
 app.set("views", path.join(__dirname, "../views"));
 app.set("view engine", "pug");

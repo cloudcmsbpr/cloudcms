@@ -54,7 +54,7 @@ class UserController{
         try {
             await userRepository.save(user);
         } catch (e) {
-            res.status(409).send("username already in use");
+            res.status(409).send({message: "username already in use"});
             return;
         }
 
