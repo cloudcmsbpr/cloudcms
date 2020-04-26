@@ -33,8 +33,8 @@ export default class Routes {
         this.app.post("/forgot", userController.postForgot);
         this.app.get("/reset/:token", userController.getReset);
         this.app.post("/reset/:token", userController.postReset);
-        this.app.get("/signup", userController.getSignup);
-        this.app.post("/signup", userController.postSignup);
+        // this.app.get("/signup", userController.getSignup);
+        // this.app.post("/signup", userController.postSignup);
         this.app.get("/contact", contactController.getContact);
         this.app.post("/contact", contactController.postContact);
         this.app.get("/account", passportConfig.isAuthenticated, userController.getAccount);
