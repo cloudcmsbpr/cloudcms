@@ -11,7 +11,7 @@ class AuthController {
         //Check if username and password are set
         const { username, password } = req.body;
         if (!(username && password)) {
-            res.status(400).send();
+            res.status(400).send({message: "no username or password"});
         }
 
         //Get user from database
@@ -20,12 +20,12 @@ class AuthController {
         try {
             user = await userRepository.findOneOrFail({ where: { username } });
         } catch (error) {
-            res.status(401).send();
+            res.status(401).send({message: "no username found"});
         }
 
         //Check if encrypted password match
         if (!user.checkIfUnencryptedPasswordIsValid(password)) {
-            res.status(401).send();
+            res.status(401).send({message: "wrong password"});
             return;
         }
 
