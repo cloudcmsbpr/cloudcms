@@ -15,6 +15,7 @@ import editEntityController from "./controllers/editEntityController";
 import AuthController from "./cms/shared/controllers/authController";
 import UserController from "./cms/shared/controllers/userController";
 import {checkJwt} from "./cms/shared/middleware/authMiddleware";
+import cors from "cors";
 
 export default class Routes {
 
@@ -65,10 +66,10 @@ export default class Routes {
         this.app.get("/editEntity", passportConfig.isAuthenticated, editEntityController.getEditPage);
         
         // user routes
-        this.app.post("/users/login", AuthController.login); // login
-        this.app.post("/users/signup", UserController.newUser); // signup
-        this.app.get("/users/getall", [checkJwt], UserController.listAll); // sample get with jwt
-        this.app.post("/users/delete", [checkJwt], UserController.deleteUser); // sample get with jwt
+        this.app.post("/users/login", [cors()], AuthController.login); // login
+        this.app.post("/users/signup", [cors()], UserController.newUser); // signup
+        this.app.get("/users/getall", [cors(), checkJwt], UserController.listAll); // sample get with jwt
+        this.app.post("/users/delete", [cors(), checkJwt], UserController.deleteUser); // sample get with jwt
 
         this.setPortfolioRoutes();
         this.setBlogRoutes();
