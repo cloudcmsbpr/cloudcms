@@ -1,10 +1,10 @@
-import { Request, Response } from "express";
-import { getRepository } from "typeorm";
-import { validate } from "class-validator";
+import {Request, Response} from "express";
+import {getRepository} from "typeorm";
+import {validate} from "class-validator";
 
-import { User } from "../../shared/models/User";
+import {User} from "../../shared/models/User";
 
-class UserController{
+class UserController {
 
     static listAll = async (req: Request, res: Response) => {
         //Get users from database
@@ -28,7 +28,7 @@ class UserController{
                 select: ["id", "username"] //We dont want to send the password on response
             });
         } catch (error) {
-            res.status(404).send("User not found");
+            res.status(404).send({message: "User not found"});
         }
     };
 
@@ -39,7 +39,7 @@ class UserController{
         user.username = username;
         user.password = password;
 
-        //Validade if the parameters are ok
+        //Validate if the parameters are ok
         const errors = await validate(user);
         if (errors.length > 0) {
             res.status(400).send(errors);
@@ -59,7 +59,7 @@ class UserController{
         }
 
         //If all ok, send 201 response
-        res.status(201).send("User created");
+        res.status(201).send({message: "User created"});
     };
 
     static editUser = async (req: Request, res: Response) => {
@@ -67,7 +67,7 @@ class UserController{
         const id = req.params.id;
 
         //Get values from the body
-        const { username, role } = req.body;
+        const {username, role} = req.body;
 
         //Try to find user on database
         const userRepository = getRepository(User);
@@ -76,7 +76,7 @@ class UserController{
             user = await userRepository.findOneOrFail(id);
         } catch (error) {
             //If not found, send a 404 response
-            res.status(404).send("User not found");
+            res.status(404).send({message: "User not found"});
             return;
         }
 
@@ -92,7 +92,7 @@ class UserController{
         try {
             await userRepository.save(user);
         } catch (e) {
-            res.status(409).send("username already in use");
+            res.status(409).send({message: "username already in use"});
             return;
         }
         //After all send a 204 (no content, but accepted) response
@@ -108,7 +108,7 @@ class UserController{
         try {
             user = await userRepository.findOneOrFail(id);
         } catch (error) {
-            res.status(404).send("User not found");
+            res.status(404).send({message: "User not found"});
             return;
         }
         userRepository.delete(id);

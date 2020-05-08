@@ -29,10 +29,10 @@ class AuthController {
             return;
         }
 
-        //Sing JWT, valid for 1 hour
+        //Sign JWT, valid for 24 hours
         const token = jwt.sign(
             { userId: user.id, username: user.username }, SESSION_SECRET,
-            { expiresIn: "1h" }
+            { expiresIn: "24h" }
         );
 
         //Send the jwt in the response
@@ -58,13 +58,13 @@ class AuthController {
             res.status(401).send();
         }
 
-        //Check if old password matchs
+        //Check if old password matches
         if (!user.checkIfUnencryptedPasswordIsValid(oldPassword)) {
             res.status(401).send();
             return;
         }
 
-        //Validate de model (password lenght)
+        //Validate the model (password length)
         user.password = newPassword;
         const errors = await validate(user);
         if (errors.length > 0) {
