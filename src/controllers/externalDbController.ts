@@ -1,14 +1,9 @@
 import {Request, Response} from "express";
 import {IsAnyUndefined} from "../util/helpers";
 import {AttachedDatabaseModel} from "../models/AttachedDatabase";
-import {decrypt, encrypt} from "../util/cryptoHelper";
-import DatabaseHandler from "../cms/databaseHandler";
-import {User as StageUser} from "../cms/shared/models/User";
-import {Board} from "../cms/board/models/Board";
-import {Post} from "../cms/board/models/Post";
-import {Tech} from "../cms/portfolio/models/Tech";
-import {Project} from "../cms/portfolio/models/Project";
+import {encrypt} from "../util/cryptoHelper";
 import {createConnection} from "typeorm";
+import {allEntities} from "../util/allEntities";
 
 export default class ExternalDbController {
 
@@ -50,7 +45,7 @@ export default class ExternalDbController {
             type: "postgres", host: attachedDbInfo.host, port: attachedDbInfo.port,
             username: attachedDbInfo.username, password: password,
             database: attachedDbInfo.database,
-            entities: [StageUser, Board, Post, Tech, Project], // todo: move entities to a global var
+            entities: allEntities,
             synchronize: true, logging: false
         })
             .then(() => { // connection successfully tested
