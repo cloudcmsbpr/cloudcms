@@ -3,7 +3,7 @@ import {
     getBlogById,
     addBlog,
     editBlog,
-    deleteBlog, getAllBlogPosts, getBlogPostById, addBlogPost, editBlogPost, deleteBlogPost,
+    deleteBlog, getAllBlogPosts, getBlogPostById, addBlogPost, editBlogPost, deleteBlogPost, addedEndpoint,
 } from "../controllers/blogController";
 import SingleRoute from "../../util/SingleRoute";
 import {checkJwt} from "../../shared/middleware/authMiddleware";
@@ -21,5 +21,5 @@ export const routes: SingleRoute[] = [
     new SingleRoute("post", "/blog/add_blog_post", addBlogPost, [cors(), checkJwt]),
     new SingleRoute("post", "/blog/edit_blog_post", editBlogPost, [cors(), checkJwt]),
     new SingleRoute("post", "/blog/delete_blog_post", deleteBlogPost, [cors(), checkJwt]),
-
+    new SingleRoute("get", "/blog/get_status", addedEndpoint),
 ];
