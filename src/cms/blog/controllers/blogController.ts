@@ -2,22 +2,22 @@ import {Request, Response, NextFunction} from "express";
 import {Blog} from "../models/Blog";
 import {getRepository} from "typeorm";
 import {check, sanitize} from "express-validator";
-import {edit, foof, remove, save} from "../../shared/helpers/databaseHelpers";
-import {create} from "../../portfolio/controllers/portfolioController";
-import {BlogPost} from "../models/BlogPost";
+    import {edit, foof, remove, save} from "../../shared/helpers/databaseHelpers";
+    import {create} from "../../portfolio/controllers/portfolioController";
+    import {BlogPost} from "../models/BlogPost";
 
-export const getAllBlogs = async (req: Request, res: Response) => {
-    const repo = getRepository(Blog);
-    try {
-        const all = await repo.find({});
-        return res.send(all);
-    } catch (e) {
-        return res.status(404).send("No blogs found");
-    }
-};
+    export const getAllBlogs = async (req: Request, res: Response) => {
+        const repo = getRepository(Blog);
+        try {
+            const all = await repo.find({});
+            return res.send(all);
+        } catch (e) {
+            return res.status(404).send("No blogs found");
+        }
+    };
 
-export const addBlog = async (req: Request, res: Response) => {
-    const requiredFields = ["name", "author", "blogPosts"];
+    export const addBlog = async (req: Request, res: Response) => {
+        const requiredFields = ["name", "author", "blogPosts"];
     const parsed = create<Blog>(req, requiredFields);
     await save<Blog>(parsed, res, Blog);
 };
@@ -66,4 +66,8 @@ export const editBlogPost = async (req: Request, res: Response) => {
 
 export const deleteBlogPost = async (req: Request, res: Response) => {
     return await remove<BlogPost>(req.body.id || req.body.name, res, BlogPost);
+};
+
+export const addedEndpoint = async (req: Request, res: Response) => {
+    return res.send("new endpoint is working");
 };
