@@ -62,7 +62,7 @@
         "request": "^2.88.2",
         "request-promise": "^4.2.5",
         "ts-node-dev": "^1.0.0-pre.44",
-        "typeorm": "^0.2.24",
+        "typeorm": "^0.2.25",
         "winston": "^3.2.1"
     },
     "devDependencies": {
