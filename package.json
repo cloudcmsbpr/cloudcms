@@ -48,7 +48,7 @@
         "express-validator": "^6.4.0",
         "fbgraph": "^1.4.4",
         "helmet": "^3.21.3",
-        "jsonwebtoken": "^8.5.1",
+        "jsonwebtoken": "^9.0.0",
         "lodash": "^4.17.15",
         "lusca": "^1.6.1",
         "mongoose": "^5.9.3",
